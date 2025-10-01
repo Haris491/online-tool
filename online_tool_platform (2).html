@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Handy Tools — Unit & Expense & BMI & Randomizer</title>
+  <style>
+    :root{
+      --bg1:#0f1724;
+      --bg2:#081226;
+      --card:#0f1724cc;
+      --glass: rgba(255,255,255,0.06);
+      --accent1:#8b5cf6;
+      --accent2:#06b6d4;
+      --accent3:#f59e0b;
+      --muted:#bfc6d4;
+      --glass-border: rgba(255,255,255,0.15);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#e6eef8}
+
+    header{display:flex;align-items:center;justify-content:space-between;padding:20px 32px}
+    .logo{display:flex;gap:12px;align-items:center}
+    .title{font-weight:700;font-size:20px;letter-spacing:0.4px}
+    .subtitle{font-size:13px;color:#d4dae6}
+
+    .wrap{max-width:1100px;margin:24px auto;padding:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));box-shadow: 0 10px 30px rgba(2,6,23,0.6);backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.1)}
+
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:22px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.right{order:2}}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));border-radius:14px;padding:18px;border:1px solid var(--glass-border);box-shadow:0 6px 18px rgba(2,6,23,0.55)}
+    .card h3{margin:0 0 12px;color:#ffffff}
+
+    .tools{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    @media (max-width:700px){.tools{grid-template-columns:1fr}}
+
+    label{display:block;font-size:14px;color:#ffffff;margin-bottom:6px;font-weight:600}
+    .field{display:flex;gap:10px;align-items:center}
+    input[type=text], input[type=number], select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.25);background:rgba(0,0,0,0.35);color:#ffffff;font-size:14px;font-weight:500}
+    select option{background:#0f1724;color:#ffffff}
+
+    button{cursor:pointer;padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#001019;font-weight:700}
+
+    .result{margin-top:10px;padding:12px;border-radius:10px;background:linear-gradient(90deg, var(--accent3), var(--accent2));border:1px solid rgba(255,255,255,0.2);font-weight:700;color:#000;font-size:15px;text-align:center}
+
+    footer{display:flex;justify-content:space-between;align-items:center;padding:12px 32px;color:#d4dae6;font-size:13px}
+
+    .card{transition:transform .28s ease, box-shadow .28s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.7)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="title">Handy Tools</div>
+    </div>
+    <div class="subtitle">All-in-one Utilities</div>
+  </header>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="left">
+        <div class="tools">
+          <div class="card">
+            <h3>Unit Converter</h3>
+            <label>Value:</label>
+            <input type="number" id="uc-value">
+            <label>From:</label>
+            <select id="uc-from">
+              <option value="m">Meters</option>
+              <option value="km">Kilometers</option>
+              <option value="cm">Centimeters</option>
+              <option value="kg">Kilograms</option>
+              <option value="g">Grams</option>
+              <option value="c">Celsius</option>
+              <option value="f">Fahrenheit</option>
+            </select>
+            <label>To:</label>
+            <select id="uc-to">
+              <option value="m">Meters</option>
+              <option value="km">Kilometers</option>
+              <option value="cm">Centimeters</option>
+              <option value="kg">Kilograms</option>
+              <option value="g">Grams</option>
+              <option value="c">Celsius</option>
+              <option value="f">Fahrenheit</option>
+            </select>
+            <button onclick="convertUnit()">Convert</button>
+            <div class="result" id="uc-result"></div>
+          </div>
+
+          <div class="card">
+            <h3>BMI Calculator</h3>
+            <label>Weight (kg):</label>
+            <input type="number" id="bmi-weight">
+            <label>Height (m):</label>
+            <input type="number" id="bmi-height">
+            <button onclick="calcBMI()">Calculate</button>
+            <div class="result" id="bmi-result"></div>
+          </div>
+
+          <div class="card">
+            <h3>Meeting Expense Splitter</h3>
+            <label>Total Expense:</label>
+            <input type="number" id="me-total">
+            <label>Number of People:</label>
+            <input type="number" id="me-people">
+            <button onclick="splitExpense()">Split</button>
+            <div class="result" id="me-result"></div>
+          </div>
+
+          <div class="card">
+            <h3>Random Option Picker</h3>
+            <label>Enter options (comma separated):</label>
+            <input type="text" id="ro-options">
+            <button onclick="pickRandom()">Pick</button>
+            <div class="result" id="ro-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Handy Tools © 2025</div>
+    <div>Made with ❤️</div>
+  </footer>
+
+  <script>
+    function convertUnit(){
+      let value = parseFloat(document.getElementById('uc-value').value);
+      let from = document.getElementById('uc-from').value;
+      let to = document.getElementById('uc-to').value;
+      if(isNaN(value)) return;
+      let result = value;
+
+      // Length
+      if(from==='m'){ if(to==='km') result = value/1000; else if(to==='cm') result=value*100; }
+      else if(from==='km'){ if(to==='m') result = value*1000; else if(to==='cm') result=value*100000; }
+      else if(from==='cm'){ if(to==='m') result = value/100; else if(to==='km') result=value/100000; }
+
+      // Mass
+      if(from==='kg'){ if(to==='g') result=value*1000; }
+      else if(from==='g'){ if(to==='kg') result=value/1000; }
+
+      // Temperature
+      if(from==='c' && to==='f') result=(value*9/5)+32;
+      else if(from==='f' && to==='c') result=(value-32)*5/9;
+
+      document.getElementById('uc-result').innerText = value+" "+from+" = "+result+" "+to;
+    }
+
+    function calcBMI(){
+      let w = parseFloat(document.getElementById('bmi-weight').value);
+      let h = parseFloat(document.getElementById('bmi-height').value);
+      if(isNaN(w)||isNaN(h)||h<=0) return;
+      let bmi = w/(h*h);
+      let category = bmi<18.5?"Underweight":bmi<25?"Normal":bmi<30?"Overweight":"Obese";
+      document.getElementById('bmi-result').innerText = "BMI: "+bmi.toFixed(2)+" ("+category+")";
+    }
+
+    function splitExpense(){
+      let total = parseFloat(document.getElementById('me-total').value);
+      let people = parseInt(document.getElementById('me-people').value);
+      if(isNaN(total)||isNaN(people)||people<=0) return;
+      let share = total/people;
+      document.getElementById('me-result').innerText = "Each person pays: "+share.toFixed(2);
+    }
+
+    function pickRandom(){
+      let opts = document.getElementById('ro-options').value.split(',').map(o=>o.trim()).filter(o=>o);
+      if(opts.length===0) return;
+      let choice = opts[Math.floor(Math.random()*opts.length)];
+      document.getElementById('ro-result').innerText = "Chosen: "+choice;
+    }
+  </script>
+</body>
+</html>
