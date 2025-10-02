@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handy Tools – All-in-One Utilities</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      transition: background 0.5s, color 0.5s;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+    .tool {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 15px;
+      max-width: 500px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background 0.5s, color 0.5s;
+    }
+    .tool:hover { transform: scale(1.05); }
+    label { font-weight: bold; display: block; margin: 10px 0 5px; }
+    input, select, button, textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin: 5px;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      background: #ff9800;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background: #e68900; }
+    .result { margin-top: 10px; font-weight: bold; color: #ffeb3b; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .donate { margin-top: 40px; }
+
+    /* Dark Mode Styles */
+    body.dark {
+      background: #121212;
+      color: #f1f1f1;
+    }
+    body.dark .tool {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ddd;
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      background: #ff9800;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+      border: none;
+    }
+    .dark-toggle:hover { background: #e68900; }
+  </style>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  <h1>Handy Tools – All-in-One Utilities 🚀</h1>
+
+  <!-- Unit Converter -->
+  <div class="tool">
+    <h2>Unit Converter</h2>
+    <label for="value">Value:</label>
+    <input type="number" id="value">
+    <label for="unit">Unit:</label>
+    <select id="unit">
+      <option value="m-km">Meters → Kilometers</option>
+      <option value="km-m">Kilometers → Meters</option>
+      <option value="c-f">Celsius → Fahrenheit</option>
+      <option value="f-c">Fahrenheit → Celsius</option>
+      <option value="kg-g">Kilograms → Grams</option>
+      <option value="g-kg">Grams → Kilograms</option>
+    </select>
+    <button onclick="convertUnit()">Convert</button>
+    <p class="result" id="unitResult"></p>
+  </div>
+
+  <!-- BMI Calculator -->
+  <div class="tool">
+    <h2>BMI Calculator</h2>
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight">
+    <label for="height">Height (m):</label>
+    <input type="number" step="0.01" id="height">
+    <button onclick="calculateBMI()">Calculate</button>
+    <p class="result" id="bmiResult"></p>
+  </div>
+
+  <!-- Meeting Expense Calculator -->
+  <div class="tool">
+    <h2>Meeting Expense Calculator</h2>
+    <label for="totalExpense">Total Expense:</label>
+    <input type="number" id="totalExpense">
+    <label for="participants">Number of Participants:</label>
+    <input type="number" id="participants">
+    <button onclick="calculateExpense()">Calculate</button>
+    <p class="result" id="expenseResult"></p>
+  </div>
+
+  <!-- Random Option Picker -->
+  <div class="tool">
+    <h2>Random Option Picker</h2>
+    <label for="options">Enter options (comma separated):</label>
+    <textarea id="options"></textarea>
+    <button onclick="pickRandom()">Pick</button>
+    <p class="result" id="randomResult"></p>
+  </div>
+
+  <!-- Ad block -->
+  <div class="tool">
+    <h2>Sponsored</h2>
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXX"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Donation Button -->
+  <div class="donate">
+    <a href="https://www.buymeacoffee.com/YOUR_USERNAME" target="_blank">
+      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" 
+           alt="Buy Me A Coffee" 
+           style="height: 60px !important;width: 217px !important;">
+    </a>
+  </div>
+
+  <script>
+    function convertUnit() {
+      const value = parseFloat(document.getElementById("value").value);
+      const unit = document.getElementById("unit").value;
+      let result;
+      if (isNaN(value)) {
+        result = "Please enter a value!";
+      } else {
+        switch (unit) {
+          case "m-km": result = (value / 1000) + " km"; break;
+          case "km-m": result = (value * 1000) + " m"; break;
+          case "c-f": result = (value * 9/5 + 32) + " °F"; break;
+          case "f-c": result = ((value - 32) * 5/9).toFixed(2) + " °C"; break;
+          case "kg-g": result = (value * 1000) + " g"; break;
+          case "g-kg": result = (value / 1000) + " kg"; break;
+          default: result = "Invalid option";
+        }
+      }
+      document.getElementById("unitResult").innerText = result;
+    }
+
+    function calculateBMI() {
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      let result;
+      if (isNaN(weight) || isNaN(height) || height <= 0) {
+        result = "Please enter valid numbers!";
+      } else {
+        const bmi = (weight / (height * height)).toFixed(2);
+        let category;
+        if (bmi < 18.5) category = "Underweight";
+        else if (bmi < 25) category = "Normal weight";
+        else if (bmi < 30) category = "Overweight";
+        else category = "Obese";
+        result = `BMI: ${bmi} (${category})`;
+      }
+      document.getElementById("bmiResult").innerText = result;
+    }
+
+    function calculateExpense() {
+      const total = parseFloat(document.getElementById("totalExpense").value);
+      const participants = parseInt(document.getElementById("participants").value);
+      let result;
+      if (isNaN(total) || isNaN(participants) || participants <= 0) {
+        result = "Please enter valid values!";
+      } else {
+        result = "Each person pays: " + (total / participants).toFixed(2);
+      }
+      document.getElementById("expenseResult").innerText = result;
+    }
+
+    function pickRandom() {
+      const options = document.getElementById("options").value.split(",");
+      const cleaned = options.map(o => o.trim()).filter(o => o);
+      let result;
+      if (cleaned.length === 0) {
+        result = "Please enter options!";
+      } else {
+        const random = cleaned[Math.floor(Math.random() * cleaned.length)];
+        result = "Selected: " + random;
+      }
+      document.getElementById("randomResult").innerText = result;
+    }
+
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      const btn = document.querySelector(".dark-toggle");
+      if (document.body.classList.contains("dark")) {
+        btn.innerText = "☀️ Light Mode";
+      } else {
+        btn.innerText = "🌙 Dark Mode";
+      }
+    }
+  </script>
+</body>
+</html>
